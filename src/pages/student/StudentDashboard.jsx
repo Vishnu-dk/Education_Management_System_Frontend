@@ -1,20 +1,23 @@
 import AppLayout from "../../components/layout/AppLayout";
 
-import { useGetMyBooksQuery, useGetStudentProfileQuery } from "../../store/api/studentApi";
+import {
+  useGetMyBooksQuery,
+  useGetStudentProfileQuery,
+} from "../../store/api/studentApi";
 
 import { Box, Text, Flex, SimpleGrid, Spinner, Badge } from "@chakra-ui/react";
 
 export default function StudentDashboard() {
-const userId = localStorage.getItem("userId"); 
+  const userId = localStorage.getItem("userId");
   const { data: books, isLoading, error } = useGetMyBooksQuery();
 
-  const{
-    data:student,
-    isLoading:studentLoading,
-    error:studentError
-  }=useGetStudentProfileQuery(userId);
+  const {
+    data: student,
+    isLoading: studentLoading,
+    error: studentError,
+  } = useGetStudentProfileQuery(userId);
 
-  if (isLoading||studentLoading) {
+  if (isLoading || studentLoading) {
     return (
       <AppLayout>
         <Flex justify="center" align="center" h="400px">
@@ -52,7 +55,7 @@ const userId = localStorage.getItem("userId");
 
       <Box mb="6">
         <Text fontSize="32px" fontWeight="700" color="#0F172A">
-            Welcome {student?.name} ,
+          Welcome {student?.name} ,
         </Text>
 
         <Text color="#64748B" mt="2">

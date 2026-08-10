@@ -94,11 +94,9 @@ export const librarianApi = createApi({
       }),
       getLibrarianProfile: builder.query({
         query: (librarianId) => ({
-          url: `//${librarianId}`,
+          url: `/${librarianId}`,
         }),
       }),
-
-      tagTypes: ["Books"],
     };
   },
 });
@@ -113,5 +111,5 @@ export const {
   useDeactivateBookMutation,
   useActivateBookMutation,
   useMarkFinePaidMutation,
-  useGetLibrarianProfileQuery
+  useGetLibrarianProfileQuery,
 } = librarianApi;

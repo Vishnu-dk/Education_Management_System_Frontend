@@ -30,18 +30,18 @@ export const studentApi = createApi({
         url: "/book-requests/my-books",
       }),
     }),
-    getStudentProfile: builder.query({
-      query: ( studentId ) => ({
-        url: `/profile/${studentId}`,
-      }),
-    }),
-        getProfile: builder.query({
-      query: ( studentId ) => ({
+
+    getProfile: builder.query({
+      query: (studentId) => ({
         url: `/profile/${studentId}`,
       }),
     }),
   }),
 });
 
-export const { useGetBooksQuery, useRequestBookMutation, useGetMyBooksQuery, useGetStudentProfileQuery, useGetProfileQuery } =
-  studentApi;
+export const {
+  useGetBooksQuery,
+  useRequestBookMutation,
+  useGetMyBooksQuery,
+  useGetProfileQuery,
+} = studentApi;

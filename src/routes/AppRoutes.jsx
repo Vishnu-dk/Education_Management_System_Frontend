@@ -45,7 +45,6 @@ export default function AppRoutes() {
         <Route path="/admin/requests" element={<RequestManagement />} />
 
         <Route path="/admin/issue" element={<IssueManagement />} />
-
       </Routes>
     </BrowserRouter>
   );

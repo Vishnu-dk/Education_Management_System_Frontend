@@ -40,7 +40,7 @@ export default function DataCard({
           : {}
       }
     >
-      <Flex justify="space-between" gap="8" align="flex-start"  mb="3">
+      <Flex justify="space-between" gap="8" align="flex-start" mb="3">
         <Box>
           <Text fontSize="12.5px" color="#64748B" fontWeight="500" mb="6px">
             {label}

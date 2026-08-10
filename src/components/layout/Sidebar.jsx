@@ -6,6 +6,7 @@ import {
   Separator,
   Avatar,
   Menu,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { useNavigate, useLocation } from "react-router-dom";
@@ -19,6 +20,9 @@ import {
   MdLogout,
   MdKeyboardArrowDown,
 } from "react-icons/md";
+import { logout } from "../../utils/auth";
+import { useGetProfileQuery } from "../../store/api/studentApi";
+import { useGetLibrarianProfileQuery } from "../../store/api/librarianApi";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -26,6 +30,53 @@ export default function Sidebar() {
   const location = useLocation();
 
   const role = localStorage.getItem("role");
+  const userId = localStorage.getItem("userId");
+
+  const isStudent = role === "STUDENT";
+  const isLibrarian = role === "LIBRARIAN";
+
+  const studentQuery = useGetProfileQuery(userId, {
+    skip: !userId || !isStudent,
+  });
+
+  const librarianQuery = useGetLibrarianProfileQuery(userId, {
+    skip: !userId || !isLibrarian,
+  });
+
+  const {
+    data: profile,
+    isLoading,
+    error,
+  } = isStudent ? studentQuery : librarianQuery;
+  if (isLoading) {
+    return (
+      <Flex
+        h="70px"
+        bg="white"
+        borderBottom="1px solid #E2E8F0"
+        px="6"
+        justify="center"
+        align="center"
+      >
+        <Spinner size="md" />
+      </Flex>
+    );
+  }
+
+  if (error) {
+    return (
+      <Flex
+        h="70px"
+        bg="white"
+        borderBottom="1px solid #E2E8F0"
+        px="6"
+        justify="center"
+        align="center"
+      >
+        <Text color="red.500">Error loading profile</Text>
+      </Flex>
+    );
+  }
 
   const menuItems =
     role === "STUDENT"
@@ -73,12 +124,6 @@ export default function Sidebar() {
             path: "/admin/issue",
           },
         ];
-
-  const handleLogout = () => {
-    localStorage.clear();
-
-    navigate("/");
-  };
 
   return (
     <Box
@@ -182,12 +227,12 @@ export default function Sidebar() {
               }}
             >
               <Avatar.Root size="sm">
-                <Avatar.Fallback name={role} />
+                <Avatar.Fallback name={profile.name} />
               </Avatar.Root>
 
               <Box flex="1">
                 <Text fontSize="13px" fontWeight="600">
-                  {role}
+                  {profile.name}
                 </Text>
 
                 <Text
@@ -227,7 +272,7 @@ export default function Sidebar() {
                 </Flex>
               </Menu.Item>
 
-              <Menu.Item value="logout" onClick={handleLogout}>
+              <Menu.Item value="logout" onClick={logout}>
                 <Flex align="center" gap="2" color="red.500">
                   <MdLogout />
 

@@ -18,7 +18,11 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../utils/auth";
-import { useGetProfileQuery } from "../../store/api/studentApi";
+import {
+  useGetProfileQuery,
+  useGetStudentProfileQuery,
+} from "../../store/api/studentApi";
+import { useGetLibrarianProfileQuery } from "../../store/api/librarianApi";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -27,16 +31,24 @@ export default function Navbar() {
   const userId = localStorage.getItem("userId");
 
   const roleColor = role === "STUDENT" ? "blue" : "purple";
+  const isStudent = role === "STUDENT";
+  const isLibrarian = role === "LIBRARIAN";
 
-  const {
-    data: student,
-    isLoading: studentLoading,
-    error: studentError,
-  } = useGetProfileQuery(userId, {
-    skip: !userId,
+  const studentQuery = useGetProfileQuery(userId, {
+    skip: !userId || !isStudent,
   });
 
-  if (studentLoading) {
+  const librarianQuery = useGetLibrarianProfileQuery(userId, {
+    skip: !userId || !isLibrarian,
+  });
+
+  const {
+    data: profile,
+    isLoading,
+    error,
+  } = isStudent ? studentQuery : librarianQuery;
+
+  if (isLoading) {
     return (
       <Flex
         h="70px"
@@ -51,7 +63,7 @@ export default function Navbar() {
     );
   }
 
-  if (studentError) {
+  if (error) {
     return (
       <Flex
         h="70px"
@@ -66,8 +78,8 @@ export default function Navbar() {
     );
   }
 
-  const name = student?.name || student?.fullName || role || "User";
-  const email = student?.email || "";
+  const name = profile?.name || role || "User";
+  const email = profile?.email || "";
 
   return (
     <Flex
