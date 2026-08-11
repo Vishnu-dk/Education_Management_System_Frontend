@@ -340,28 +340,16 @@ Ensure the backend server is running before accessing the frontend application.
 
 ---
 
-## Screenshots
+## Recording
 
-Add screenshots here:
+
 
 ```text
-Login Page
 
-Student Dashboard
 
-Book Catalog
+https://github.com/user-attachments/assets/84afcb89-933a-491b-8df1-9559ca8e0c7b
 
-My Books
 
-Librarian Dashboard
-
-Book Management
-
-Request Management
-
-Issue Management
-
-Profile Page
 ```
 
 ---
