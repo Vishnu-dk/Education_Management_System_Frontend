@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function AdminProfileFields() {
-  return (
-    <div>AdminProfileFields</div>
-  )
+  return <div>AdminProfileFields</div>;
 }
 
-export default AdminProfileFields
+export default AdminProfileFields;

@@ -9,17 +9,11 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 
-import {
-  MdPerson,
-  MdLogout,
-  MdKeyboardArrowDown,
-} from "react-icons/md";
+import { MdPerson, MdLogout, MdKeyboardArrowDown } from "react-icons/md";
 
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../utils/auth";
-import {
-  useGetProfileQuery
-} from "../../store/api/studentApi";
+import { useGetProfileQuery } from "../../store/api/studentApi";
 import { useGetLibrarianProfileQuery } from "../../store/api/librarianApi";
 
 export default function Navbar() {
@@ -105,8 +99,6 @@ export default function Navbar() {
 
       {/* RIGHT */}
       <Flex align="center" gap="4">
-
-
         <Badge colorPalette={roleColor} px="3" py="1" borderRadius="20px">
           {role}
         </Badge>

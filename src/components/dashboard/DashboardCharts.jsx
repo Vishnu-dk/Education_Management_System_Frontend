@@ -1,207 +1,112 @@
-import {
-    Box,
-    Text,
-    SimpleGrid
-} from "@chakra-ui/react";
+import { Box, Text, SimpleGrid } from "@chakra-ui/react";
 
 import {
-    ResponsiveContainer,
-    PieChart,
-    Pie,
-    Cell,
-    Tooltip,
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    CartesianGrid
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
 } from "recharts";
 
 const COLORS = [
-    "#2563EB",
-    "#14B8A6",
-    "#F59E0B",
-    "#8B5CF6",
-    "#EF4444",
-    "#22C55E"
+  "#2563EB",
+  "#14B8A6",
+  "#F59E0B",
+  "#8B5CF6",
+  "#EF4444",
+  "#22C55E",
 ];
 
-export default function DashboardCharts({
-    books,
-    requests
-}) {
+export default function DashboardCharts({ books, requests }) {
+  const categoryMap = {};
 
-    const categoryMap = {};
+  books?.forEach((book) => {
+    categoryMap[book.category] = (categoryMap[book.category] || 0) + 1;
+  });
 
-    books?.forEach((book) => {
+  const categoryData = Object.keys(categoryMap).map((key) => ({
+    name: key,
+    value: categoryMap[key],
+  }));
 
-        categoryMap[book.category] =
-            (categoryMap[book.category] || 0) + 1;
+  const monthlyMap = {};
 
+  requests?.forEach((request) => {
+    if (!request.requestDate) return;
+
+    const month = new Date(request.requestDate).toLocaleString("default", {
+      month: "short",
     });
 
-    const categoryData =
-        Object.keys(categoryMap).map(
-            (key) => ({
-                name: key,
-                value: categoryMap[key]
-            })
-        );
+    monthlyMap[month] = (monthlyMap[month] || 0) + 1;
+  });
 
-    const monthlyMap = {};
+  const requestData = Object.keys(monthlyMap).map((month) => ({
+    month,
+    requests: monthlyMap[month],
+  }));
 
-    requests?.forEach((request) => {
+  return (
+    <SimpleGrid
+      columns={{
+        base: 1,
+        xl: 2,
+      }}
+      gap="5"
+      mb="6"
+    >
+      {/* REQUESTS CHART */}
 
-        if (!request.requestDate)
-            return;
+      <Box bg="white" border="1px solid #E2E8F0" borderRadius="12px" p="5">
+        <Text mb="4" fontWeight="600">
+          Requests by Month
+        </Text>
 
-        const month =
-            new Date(
-                request.requestDate
-            ).toLocaleString(
-                "default",
-                { month: "short" }
-            );
+        <ResponsiveContainer width="100%" height={280}>
+          <BarChart data={requestData}>
+            <CartesianGrid strokeDasharray="3 3" />
 
-        monthlyMap[month] =
-            (monthlyMap[month] || 0) + 1;
+            <XAxis dataKey="month" />
 
-    });
+            <YAxis />
 
-    const requestData =
-        Object.keys(monthlyMap).map(
-            (month) => ({
-                month,
-                requests:
-                    monthlyMap[
-                        month
-                    ]
-            })
-        );
+            <Tooltip />
 
-    return (
+            <Bar dataKey="requests" fill="#2563EB" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Box>
 
-        <SimpleGrid
-            columns={{
-                base: 1,
-                xl: 2
-            }}
-            gap="5"
-            mb="6"
-        >
+      {/* CATEGORY CHART */}
 
-            {/* REQUESTS CHART */}
+      <Box bg="white" border="1px solid #E2E8F0" borderRadius="12px" p="5">
+        <Text mb="4" fontWeight="600">
+          Books by Category
+        </Text>
 
-            <Box
-                bg="white"
-                border="1px solid #E2E8F0"
-                borderRadius="12px"
-                p="5"
+        <ResponsiveContainer width="100%" height={280}>
+          <PieChart>
+            <Pie
+              data={categoryData}
+              dataKey="value"
+              nameKey="name"
+              outerRadius={90}
+              label
             >
+              {categoryData.map((entry, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
 
-                <Text
-                    mb="4"
-                    fontWeight="600"
-                >
-                    Requests by Month
-                </Text>
-
-                <ResponsiveContainer
-                    width="100%"
-                    height={280}
-                >
-
-                    <BarChart
-                        data={requestData}
-                    >
-
-                        <CartesianGrid
-                            strokeDasharray="3 3"
-                        />
-
-                        <XAxis
-                            dataKey="month"
-                        />
-
-                        <YAxis />
-
-                        <Tooltip />
-
-                        <Bar
-                            dataKey="requests"
-                            fill="#2563EB"
-                        />
-
-                    </BarChart>
-
-                </ResponsiveContainer>
-
-            </Box>
-
-            {/* CATEGORY CHART */}
-
-            <Box
-                bg="white"
-                border="1px solid #E2E8F0"
-                borderRadius="12px"
-                p="5"
-            >
-
-                <Text
-                    mb="4"
-                    fontWeight="600"
-                >
-                    Books by Category
-                </Text>
-
-                <ResponsiveContainer
-                    width="100%"
-                    height={280}
-                >
-
-                    <PieChart>
-
-                        <Pie
-                            data={categoryData}
-                            dataKey="value"
-                            nameKey="name"
-                            outerRadius={90}
-                            label
-                        >
-
-                            {categoryData.map(
-                                (
-                                    entry,
-                                    index
-                                ) => (
-
-                                    <Cell
-                                        key={
-                                            index
-                                        }
-                                        fill={
-                                            COLORS[
-                                                index %
-                                                    COLORS.length
-                                            ]
-                                        }
-                                    />
-
-                                )
-                            )}
-
-                        </Pie>
-
-                        <Tooltip />
-
-                    </PieChart>
-
-                </ResponsiveContainer>
-
-            </Box>
-
-        </SimpleGrid>
-
-    );
-
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </Box>
+    </SimpleGrid>
+  );
 }
