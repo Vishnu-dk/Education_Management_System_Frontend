@@ -344,13 +344,12 @@ Ensure the backend server is running before accessing the frontend application.
 
 
 
-```text
+
 
 
 https://github.com/user-attachments/assets/84afcb89-933a-491b-8df1-9559ca8e0c7b
 
 
-```
 
 ---
 
