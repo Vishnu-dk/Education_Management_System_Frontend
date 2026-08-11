@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 
 import {
-  MdNotifications,
   MdPerson,
   MdLogout,
   MdKeyboardArrowDown,
@@ -19,8 +18,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../utils/auth";
 import {
-  useGetProfileQuery,
-  useGetStudentProfileQuery,
+  useGetProfileQuery
 } from "../../store/api/studentApi";
 import { useGetLibrarianProfileQuery } from "../../store/api/librarianApi";
 
@@ -107,9 +105,7 @@ export default function Navbar() {
 
       {/* RIGHT */}
       <Flex align="center" gap="4">
-        <IconButton aria-label="notifications" variant="ghost">
-          <MdNotifications size={20} />
-        </IconButton>
+
 
         <Badge colorPalette={roleColor} px="3" py="1" borderRadius="20px">
           {role}

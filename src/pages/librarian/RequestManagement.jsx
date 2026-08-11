@@ -160,8 +160,8 @@ function RequestManagement() {
           subtitle={`${pendingCount} pending requests`}
         />
 
-        <Flex gap="4" mb="6" flexWrap="wrap">
-          <DataCard
+        <Flex  gap="4" mb="6" flexWrap="wrap">
+          <DataCard 
             label="Pending"
             value={pendingCount}
             icon={<MdSchedule />}

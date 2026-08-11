@@ -9,6 +9,7 @@ import BookManagement from "../pages/librarian/BookManagement";
 import RequestManagement from "../pages/librarian/RequestManagement";
 import IssueManagement from "../pages/librarian/IssueManagement";
 import AuthPage from "../pages/auth/AuthPage";
+import ProfilePage from "../pages/common/ProfilePge";
 
 export default function AppRoutes() {
   const token = localStorage.getItem("token");
@@ -45,6 +46,15 @@ export default function AppRoutes() {
         <Route path="/admin/requests" element={<RequestManagement />} />
 
         <Route path="/admin/issue" element={<IssueManagement />} />
+        <Route
+    path="/student/profile"
+    element={<ProfilePage />}
+/>
+
+<Route
+    path="/admin/profile"
+    element={<ProfilePage />}
+/>
       </Routes>
     </BrowserRouter>
   );

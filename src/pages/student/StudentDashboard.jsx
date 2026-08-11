@@ -2,7 +2,7 @@ import AppLayout from "../../components/layout/AppLayout";
 
 import {
   useGetMyBooksQuery,
-  useGetStudentProfileQuery,
+  useGetProfileQuery,
 } from "../../store/api/studentApi";
 
 import { Box, Text, Flex, SimpleGrid, Spinner, Badge } from "@chakra-ui/react";
@@ -15,7 +15,7 @@ export default function StudentDashboard() {
     data: student,
     isLoading: studentLoading,
     error: studentError,
-  } = useGetStudentProfileQuery(userId);
+  } = useGetProfileQuery(userId);
 
   if (isLoading || studentLoading) {
     return (
